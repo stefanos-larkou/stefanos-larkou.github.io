@@ -66,3 +66,24 @@ describe("Home", () => {
         expect(inside.sort()).toEqual(INSIDE.map(project => project.path).sort());
     });
 });
+
+async function loadAt(path: string) {
+    vi.spyOn(performance, "getEntriesByType").mockReturnValue([{ name: `http://localhost${path}` } as PerformanceEntry]);
+    vi.resetModules();
+    const { default: Loaded } = await import("./Home");
+    renderWithProviders(<Loaded />);
+}
+
+describe("Home intro", () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    it("plays when the page was loaded at the home page", async () => {
+        await loadAt("/");
+        expect(document.body).toHaveAttribute("inert");
+    });
+
+    it("stays away when the page was loaded at a project and came home later", async () => {
+        await loadAt("/random-walks");
+        expect(document.body).not.toHaveAttribute("inert");
+    });
+});

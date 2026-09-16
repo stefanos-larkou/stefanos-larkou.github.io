@@ -24,11 +24,16 @@ const BIO_WIDTH = "65ch";
 const PANEL_RADIUS = 6;
 const PREVIEW_HEIGHT = { xs: 200, sm: 240 };
 
-let introduced = false;
+function loadedAtHome(): boolean {
+    const [load] = performance.getEntriesByType("navigation");
+    return !load || new URL(load.name).pathname === "/";
+}
+
+let introducing = loadedAtHome();
 
 export default function Home() {
     const still = useMediaQuery(STILL);
-    const [stage, setStage] = useState<Stage>(still || introduced ? "done" : "typing");
+    const [stage, setStage] = useState<Stage>(still || !introducing ? "done" : "typing");
     const nameRef = useRef<HTMLHeadingElement>(null);
 
     const arrived = stage !== "typing";
@@ -43,7 +48,7 @@ export default function Home() {
                     lands={nameRef}
                     onTyped={() => setStage("settling")}
                     onLanded={() => {
-                        introduced = true;
+                        introducing = false;
                         setStage("done");
                     }}
                 />

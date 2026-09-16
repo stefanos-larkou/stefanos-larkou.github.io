@@ -5,6 +5,7 @@ import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack, Tooltip, Ty
 import { useTheme } from "@mui/material/styles";
 import { Suspense, useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router";
+import { CoffeeLink } from "./components/CoffeeLink";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { PAGES, TITLE_PREFIX } from "./core/pages";
 import { glass } from "./core/surfaces";
@@ -66,7 +67,8 @@ export function App() {
                         </IconButton>
                     </Tooltip>
                 )}
-                <Box sx={{ ml: "auto" }}>
+                <Box sx={{ ml: "auto", display: "flex" }}>
+                    <CoffeeLink />
                     <ThemeToggle />
                 </Box>
             </Stack>
