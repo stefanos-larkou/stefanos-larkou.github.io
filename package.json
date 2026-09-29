@@ -9,6 +9,7 @@
         "test": "vitest run",
         "dev": "vite",
         "build": "tsc -b && vite build",
+        "languages": "node --env-file-if-exists=.env scripts/languages.mjs",
         "lint": "eslint .",
         "preview": "vite preview"
     },

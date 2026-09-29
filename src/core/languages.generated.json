@@ -1,0 +1,58 @@
+{
+    "Find-My-Way": [
+        {
+            "name": "TypeScript",
+            "share": 98.4
+        },
+        {
+            "name": "Other",
+            "share": 1.6
+        }
+    ],
+    "RWalk": [
+        {
+            "name": "TypeScript",
+            "share": 98.8
+        },
+        {
+            "name": "Other",
+            "share": 1.2
+        }
+    ],
+    "forecast": [
+        {
+            "name": "TypeScript",
+            "share": 68
+        },
+        {
+            "name": "Python",
+            "share": 31.4
+        },
+        {
+            "name": "Other",
+            "share": 0.6
+        }
+    ],
+    "dinopedia": [
+        {
+            "name": "TypeScript",
+            "share": 42
+        },
+        {
+            "name": "C#",
+            "share": 42
+        },
+        {
+            "name": "SCSS",
+            "share": 7.6
+        },
+        {
+            "name": "HTML",
+            "share": 7.5
+        },
+        {
+            "name": "Other",
+            "share": 0.9
+        }
+    ]
+}

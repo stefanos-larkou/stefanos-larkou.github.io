@@ -7,6 +7,8 @@ export interface Page {
     element: LazyExoticComponent<ComponentType>;
     heading?: string;
     blurb?: string;
+    tech?: string[];
+    repo?: string;
     info?: LazyExoticComponent<ComponentType>;
     preview?: LazyExoticComponent<ComponentType>;
     accent?: string;
@@ -28,6 +30,8 @@ export const PAGES: Page[] = [
         blurb: "A pathfinding visualiser on a hexagonal grid. Each map is a randomly generated "
             + "irregular connected shape. A search begins at a root hex and works outwards until it "
             + "reaches the target hex, with a playback that replays every cell it considered on the way.",
+        tech: ["React", "MUI", "Canvas"],
+        repo: "Find-My-Way",
         element: lazy(() => import("../pages/FindMyWay")),
         info: lazy(() => import("../components/AboutFindMyWay")),
         preview: lazy(() => import("../components/FindMyWayPreview")),
@@ -42,6 +46,8 @@ export const PAGES: Page[] = [
             + "at a shared origin and each one takes a step in a direction chosen at random, over and "
             + "over. The playback replays every step, and the statistics run a far larger crowd to "
             + "measure what the walk does against what probability theory says it should.",
+        tech: ["React", "MUI", "Canvas", "Three.js", "Chart.js"],
+        repo: "RWalk",
         element: lazy(() => import("../pages/RandomWalks")),
         info: lazy(() => import("../components/AboutRandomWalks")),
         preview: lazy(() => import("../components/RandomWalksPreview")),
@@ -53,6 +59,8 @@ export const PAGES: Page[] = [
 export interface Project {
     heading: string;
     blurb: string;
+    tech: string[];
+    repo: string;
     preview?: LazyExoticComponent<ComponentType>;
     image?: string;
     accent?: string;
@@ -60,8 +68,8 @@ export interface Project {
     url?: string;
 }
 
-const ROUTED: Project[] = PAGES.flatMap(page => page.heading && page.blurb
-    ? [{ heading: page.heading, blurb: page.blurb, preview: page.preview, accent: page.accent, path: page.path }]
+const ROUTED: Project[] = PAGES.flatMap(page => page.heading && page.blurb && page.tech && page.repo
+    ? [{ heading: page.heading, blurb: page.blurb, tech: page.tech, repo: page.repo, preview: page.preview, accent: page.accent, path: page.path }]
     : []);
 
 export const DINOPEDIA_URL = "https://dinopedia.io";
@@ -74,6 +82,8 @@ export const PROJECTS: Project[] = [
         blurb: "A weather forecast for Larnaca that keeps score of itself. Four times a day it saves what "
             + "three global models predict, corrects them with a gradient-boosted model trained on two years "
             + "of archived forecasts, and grades every prediction against ERA5 once the truth catches up.",
+        tech: ["React", "MUI", "Chart.js", "pandas", "NumPy"],
+        repo: "forecast",
         url: FORECAST_URL,
         accent: "linear-gradient(135deg, #2f7fd6, #9fd0f0)",
         image: "/forecast.svg"
@@ -84,6 +94,8 @@ export const PROJECTS: Project[] = [
             + "end, an ASP.NET Core API and an SQL database, all running on Azure. Browse and filter the "
             + "catalogue, watch Pangaea break apart on an interactive palaeo globe of the Mesozoic, or "
             + "try to name the day's mystery dinosaur.",
+        tech: ["Angular", "Angular Material", "Three.js", "Chart.js", "ASP.NET Core", "EF Core", "SQL Server", "Azure"],
+        repo: "dinopedia",
         url: DINOPEDIA_URL,
         accent: "linear-gradient(135deg, #0b1633, #2a3c63)",
         image: "/dinopedia-logo.svg"

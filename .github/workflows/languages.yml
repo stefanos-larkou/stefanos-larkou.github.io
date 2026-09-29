@@ -1,0 +1,41 @@
+name: Languages
+
+on:
+    schedule:
+        - cron: "40 3 * * *"
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    actions: write
+
+concurrency:
+    group: languages
+    cancel-in-progress: false
+
+jobs:
+    refresh:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: 24
+            - run: npm run languages
+              env:
+                  LANGUAGES_TOKEN: ${{ secrets.LANGUAGES_TOKEN }}
+            - name: Commit the refreshed shares
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add src/core/languages.generated.json
+                  if git diff --staged --quiet; then
+                      echo "The shares have not moved."
+                      exit 0
+                  fi
+                  git commit -m "refresh repository language shares"
+                  git push
+                  gh workflow run ci.yml --ref master

@@ -3,8 +3,10 @@ import { Suspense, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { ContactLinks } from "../components/ContactLinks";
 import { HomeBackdrop } from "../components/HomeBackdrop";
+import { LanguagePie } from "../components/LanguagePie";
 import { Intro, SETTLE_MS } from "../components/Intro";
 import type { Stage } from "../components/Intro";
+import { sharesFor } from "../core/languages";
 import { PROJECTS } from "../core/pages";
 import type { Project } from "../core/pages";
 import { STILL } from "../core/preview";
@@ -22,7 +24,9 @@ const TECHNOLOGIES = ["TypeScript", "React", "Angular", "C#", ".NET", "Azure", "
 
 const BIO_WIDTH = "65ch";
 const PANEL_RADIUS = 6;
-const PREVIEW_HEIGHT = { xs: 200, sm: 240 };
+const PREVIEW_RATIO = "3 / 2";
+const PREVIEW_MIN_HEIGHT = 200;
+const PREVIEW_MAX_HEIGHT = 420;
 
 function loadedAtHome(): boolean {
     const [load] = performance.getEntriesByType("navigation");
@@ -99,10 +103,18 @@ export default function Home() {
                         ...glass(theme)
                     })}
                 >
-                    <Container maxWidth="md" sx={{ py: { xs: 5, md: 7 } }}>
+                    <Container maxWidth="lg" sx={{ py: { xs: 5, md: 7 } }}>
                         <Stack spacing={4}>
                             <Typography variant="h2">Projects</Typography>
-                            {PROJECTS.map(project => <ProjectCard key={project.path ?? project.url} project={project} />)}
+                            <Box
+                                sx={{
+                                    display: "grid",
+                                    gap: { xs: 3, md: 4 },
+                                    gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))" }
+                                }}
+                            >
+                                {PROJECTS.map(project => <ProjectCard key={project.path ?? project.url} project={project} />)}
+                            </Box>
                         </Stack>
                     </Container>
                 </Box>
@@ -124,9 +136,8 @@ function ProjectCard({ project }: { project: Project; }) {
             aria-label={away ? `${project.heading} (opens in a new tab)` : project.heading}
             sx={theme => ({
                 display: "grid",
-                gap: { xs: 2, sm: 3 },
-                gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "minmax(0, 5fr) minmax(0, 7fr)" },
-                alignItems: "center",
+                gap: 2,
+                gridTemplateRows: "auto 1fr auto auto",
                 p: { xs: 2, sm: 2.5 },
                 borderRadius: theme.spacing(3),
                 border: "1px solid",
@@ -140,7 +151,10 @@ function ProjectCard({ project }: { project: Project; }) {
         >
             <Box
                 sx={theme => ({
-                    height: PREVIEW_HEIGHT,
+                    width: "100%",
+                    aspectRatio: PREVIEW_RATIO,
+                    minHeight: PREVIEW_MIN_HEIGHT,
+                    maxHeight: PREVIEW_MAX_HEIGHT,
                     borderRadius: theme.spacing(2),
                     overflow: "hidden",
                     display: "flex",
@@ -170,8 +184,22 @@ function ProjectCard({ project }: { project: Project; }) {
 
             <Stack spacing={1}>
                 <Typography variant="h5" component="h3">{project.heading}</Typography>
-                <Typography variant="body2" color="text.secondary">{project.blurb}</Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>{project.blurb}</Typography>
             </Stack>
+
+            <Stack direction="row" sx={{ flexWrap: "wrap", gap: 0.75 }}>
+                {project.tech.map(name => (
+                    <Chip
+                        key={name}
+                        label={name}
+                        size="small"
+                        variant="outlined"
+                        sx={{ borderColor: "brand.soft" }}
+                    />
+                ))}
+            </Stack>
+
+            <LanguagePie shares={sharesFor(project.repo)} label={`Language share of the ${project.heading} repository`} />
         </Box>
     );
 }

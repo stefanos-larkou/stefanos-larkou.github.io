@@ -1,12 +1,23 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Home from "./Home";
+import { sharesFor } from "../core/languages";
 import { PROJECTS } from "../core/pages";
+import type { Project } from "../core/pages";
 import { renderWithProviders } from "../test-utils";
 
 const INSIDE = PROJECTS.filter(project => project.path !== undefined);
 const ALONGSIDE = PROJECTS.filter(project => project.url?.startsWith("/"));
 const AWAY = PROJECTS.filter(project => project.url !== undefined);
+
+function cardFor(project: Project): HTMLElement {
+    const name = project.url === undefined ? project.heading : `${project.heading} (opens in a new tab)`;
+    return screen.getByRole("link", { name });
+}
+
+function outsideTheCards(text: string): HTMLElement[] {
+    return screen.getAllByText(text).filter(node => node.closest("a") === null);
+}
 
 function settled() {
     vi.stubGlobal("matchMedia", (query: string) => ({
@@ -52,10 +63,31 @@ describe("Home", () => {
         });
     });
 
-    it("names the technologies", () => {
+    it("names the technologies in the introduction", () => {
         renderWithProviders(<Home />);
-        expect(screen.getByText("TypeScript")).toBeInTheDocument();
-        expect(screen.getByText("Python")).toBeInTheDocument();
+        expect(outsideTheCards("TypeScript")).toHaveLength(1);
+        expect(outsideTheCards("Python")).toHaveLength(1);
+    });
+
+    it("names the frameworks each project is built with, on that project's own card", () => {
+        renderWithProviders(<Home />);
+        PROJECTS.forEach(project => {
+            const card = cardFor(project);
+
+            expect(project.tech).not.toHaveLength(0);
+            project.tech.forEach(tech => expect(within(card).getByText(tech)).toBeInTheDocument());
+        });
+    });
+
+    it("breaks down the languages of each project's repository, on that project's own card", () => {
+        renderWithProviders(<Home />);
+        PROJECTS.forEach(project => {
+            const card = cardFor(project);
+            const shares = sharesFor(project.repo);
+
+            expect(shares).not.toHaveLength(0);
+            shares.forEach(({ name }) => expect(within(card).getByText(name)).toBeInTheDocument());
+        });
     });
 
     it("goes nowhere inside the site that is not a registered project", () => {
