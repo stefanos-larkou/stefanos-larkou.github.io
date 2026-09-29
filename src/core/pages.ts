@@ -17,6 +17,19 @@ export interface Page {
 
 export const TITLE_PREFIX = "SL | ";
 
+const HEX_LATTICE = "repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 26px), "
+    + "repeating-linear-gradient(-60deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 26px), "
+    + "repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 22px), "
+    + "linear-gradient(150deg, #0d3b34, #1b6a55)";
+
+const WALK_LATTICE = "repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 24px), "
+    + "repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 24px), "
+    + "linear-gradient(150deg, #1a2a4d, #35507f)";
+
+const SKY = "linear-gradient(135deg, #2f7fd6, #9fd0f0)";
+
+const PARCHMENT = "linear-gradient(180deg, #efe8dc, #c3b298)";
+
 export const PAGES: Page[] = [
     {
         path: "/",
@@ -35,7 +48,7 @@ export const PAGES: Page[] = [
         element: lazy(() => import("../pages/FindMyWay")),
         info: lazy(() => import("../components/AboutFindMyWay")),
         preview: lazy(() => import("../components/FindMyWayPreview")),
-        accent: "linear-gradient(90deg, #0e9f6e, #d6337f)",
+        accent: HEX_LATTICE,
         icon: "/find-my-way.svg"
     },
     {
@@ -51,7 +64,7 @@ export const PAGES: Page[] = [
         element: lazy(() => import("../pages/RandomWalks")),
         info: lazy(() => import("../components/AboutRandomWalks")),
         preview: lazy(() => import("../components/RandomWalksPreview")),
-        accent: "linear-gradient(90deg, #2f7fd6, #e08a2e)",
+        accent: WALK_LATTICE,
         icon: "/random-walks.svg"
     }
 ];
@@ -86,7 +99,7 @@ export const PROJECTS: Project[] = [
         tech: ["React", "MUI", "Chart.js", "pandas", "NumPy"],
         repo: "forecast",
         url: FORECAST_URL,
-        accent: "linear-gradient(135deg, #2f7fd6, #9fd0f0)",
+        accent: SKY,
         image: "/forecast.svg"
     },
     {
@@ -99,7 +112,7 @@ export const PROJECTS: Project[] = [
         repo: "dinopedia",
         url: DINOPEDIA_URL,
         newTab: true,
-        accent: "linear-gradient(135deg, #0b1633, #2a3c63)",
+        accent: PARCHMENT,
         image: "/dinopedia-logo.svg"
     }
 ];
