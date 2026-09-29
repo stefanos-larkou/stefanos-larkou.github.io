@@ -66,6 +66,7 @@ export interface Project {
     accent?: string;
     path?: string;
     url?: string;
+    newTab?: boolean;
 }
 
 const ROUTED: Project[] = PAGES.flatMap(page => page.heading && page.blurb && page.tech && page.repo
@@ -97,6 +98,7 @@ export const PROJECTS: Project[] = [
         tech: ["Angular", "Angular Material", "Three.js", "Chart.js", "ASP.NET Core", "EF Core", "SQL Server", "Azure"],
         repo: "dinopedia",
         url: DINOPEDIA_URL,
+        newTab: true,
         accent: "linear-gradient(135deg, #0b1633, #2a3c63)",
         image: "/dinopedia-logo.svg"
     }

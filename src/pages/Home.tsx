@@ -1,3 +1,4 @@
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Box, Chip, Container, Fade, Stack, Typography, useMediaQuery } from "@mui/material";
 import { Suspense, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router";
@@ -125,15 +126,20 @@ export default function Home() {
 
 function ProjectCard({ project }: { project: Project; }) {
     const Preview = project.preview;
-    const away = project.url !== undefined;
-    const destination = away
-        ? { component: "a" as const, href: project.url, target: "_blank", rel: "noopener noreferrer" }
+    const newTab = project.newTab === true;
+    const destination = project.url !== undefined
+        ? {
+            component: "a" as const,
+            href: project.url,
+            target: newTab ? "_blank" : undefined,
+            rel: newTab ? "noopener noreferrer" : undefined
+        }
         : { component: RouterLink, to: project.path };
 
     return (
         <Box
             {...destination}
-            aria-label={away ? `${project.heading} (opens in a new tab)` : project.heading}
+            aria-label={newTab ? `${project.heading} (opens in a new tab)` : project.heading}
             sx={theme => ({
                 display: "grid",
                 gap: 2,
@@ -183,7 +189,10 @@ function ProjectCard({ project }: { project: Project; }) {
             </Box>
 
             <Stack spacing={1}>
-                <Typography variant="h5" component="h3">{project.heading}</Typography>
+                <Stack direction="row" sx={{ alignItems: "center", gap: 0.75 }}>
+                    <Typography variant="h5" component="h3">{project.heading}</Typography>
+                    {newTab && <OpenInNewIcon aria-hidden fontSize="small" sx={{ color: "text.secondary" }} />}
+                </Stack>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>{project.blurb}</Typography>
             </Stack>
 

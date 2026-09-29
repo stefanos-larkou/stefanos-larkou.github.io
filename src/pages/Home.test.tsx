@@ -8,10 +8,10 @@ import { renderWithProviders } from "../test-utils";
 
 const INSIDE = PROJECTS.filter(project => project.path !== undefined);
 const ALONGSIDE = PROJECTS.filter(project => project.url?.startsWith("/"));
-const AWAY = PROJECTS.filter(project => project.url !== undefined);
+const AWAY = PROJECTS.filter(project => project.newTab === true);
 
 function cardFor(project: Project): HTMLElement {
-    const name = project.url === undefined ? project.heading : `${project.heading} (opens in a new tab)`;
+    const name = project.newTab === true ? `${project.heading} (opens in a new tab)` : project.heading;
     return screen.getByRole("link", { name });
 }
 
@@ -48,10 +48,20 @@ describe("Home", () => {
         renderWithProviders(<Home />);
         expect(AWAY).not.toHaveLength(0);
         AWAY.forEach(project => {
-            const link = screen.getByRole("link", { name: `${project.heading} (opens in a new tab)` });
+            const link = cardFor(project);
             expect(link).toHaveAttribute("href", project.url);
             expect(link).toHaveAttribute("target", "_blank");
             expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
+        });
+    });
+
+    it("keeps a project that lives alongside this site in the tab the visitor is already in", () => {
+        renderWithProviders(<Home />);
+        expect(ALONGSIDE).not.toHaveLength(0);
+        ALONGSIDE.forEach(project => {
+            const link = cardFor(project);
+            expect(link).toHaveAttribute("href", project.url);
+            expect(link).not.toHaveAttribute("target");
         });
     });
 
