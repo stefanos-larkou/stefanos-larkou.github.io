@@ -96,18 +96,17 @@ export function Intro({ name, stage, lands, onTyped, onLanded }: IntroProps) {
                 }}
             >
                 {writer.typed}
-                {stage === "typing" && (
-                    <Box
-                        component="span"
-                        sx={{
-                            color: "brand.main",
-                            animation: `blink ${BLINK} steps(2, start) infinite`,
-                            "@keyframes blink": { to: { opacity: 0 } }
-                        }}
-                    >
-                        _
-                    </Box>
-                )}
+                <Box
+                    component="span"
+                    sx={{
+                        color: "brand.main",
+                        visibility: stage === "typing" ? "visible" : "hidden",
+                        animation: stage === "typing" ? `blink ${BLINK} steps(2, start) infinite` : "none",
+                        "@keyframes blink": { to: { opacity: 0 } }
+                    }}
+                >
+                    _
+                </Box>
             </Typography>
         </Box>
     );

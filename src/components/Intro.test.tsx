@@ -52,9 +52,12 @@ describe("Intro", () => {
         expect(container.textContent).toContain("_");
     });
 
-    it("takes the caret away before the name flies, so it is not measured with it", () => {
+    it("keeps the caret's place once it stops blinking, so the name does not shift as it flies", () => {
         const { container } = show("settling");
-        expect(container.textContent).not.toContain("_");
+        const caret = [...container.querySelectorAll("span")].find(node => node.textContent === "_");
+
+        expect(caret).toBeInTheDocument();
+        expect(caret).not.toBeVisible();
     });
 
     it("says when the name is typed, once it has been held a moment", () => {
