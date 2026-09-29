@@ -5,6 +5,7 @@ import { PROJECTS } from "../core/pages";
 import { renderWithProviders } from "../test-utils";
 
 const INSIDE = PROJECTS.filter(project => project.path !== undefined);
+const ALONGSIDE = PROJECTS.filter(project => project.url?.startsWith("/"));
 const AWAY = PROJECTS.filter(project => project.url !== undefined);
 
 function settled() {
@@ -63,7 +64,8 @@ describe("Home", () => {
             .map(link => link.getAttribute("href") ?? "")
             .filter(href => href.startsWith("/"));
 
-        expect(inside.sort()).toEqual(INSIDE.map(project => project.path).sort());
+        const registered = [...INSIDE.map(project => project.path), ...ALONGSIDE.map(project => project.url)];
+        expect(inside.sort()).toEqual(registered.sort());
     });
 });
 

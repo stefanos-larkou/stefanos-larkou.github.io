@@ -65,9 +65,19 @@ const ROUTED: Project[] = PAGES.flatMap(page => page.heading && page.blurb
     : []);
 
 export const DINOPEDIA_URL = "https://dinopedia.io";
+export const FORECAST_URL = import.meta.env.VITE_FORECAST_URL ?? "/forecast/";
 
 export const PROJECTS: Project[] = [
     ...ROUTED,
+    {
+        heading: "Forecast",
+        blurb: "A weather forecast for Larnaca that keeps score of itself. Four times a day it saves what "
+            + "three global models predict, corrects them with a gradient-boosted model trained on two years "
+            + "of archived forecasts, and grades every prediction against ERA5 once the truth catches up.",
+        url: FORECAST_URL,
+        accent: "linear-gradient(135deg, #2f7fd6, #9fd0f0)",
+        image: "/forecast.svg"
+    },
     {
         heading: "Dinopedia",
         blurb: "A dinosaur encyclopaedia and a daily guessing game, built end to end: an Angular front "
