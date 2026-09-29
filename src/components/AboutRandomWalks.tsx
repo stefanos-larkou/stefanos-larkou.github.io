@@ -15,7 +15,7 @@ const OPTIONS = [
     "Steps: How far each of them goes.",
     "Seed: The same seed always gives the same walk.",
     "Diagonal moves: Lets a step move along more than one axis at once.",
-    "Stable limits: Keeps the view fixed to where the whole walk will reach, rather than growing with it."
+    "Stable limits: Keeps the view fixed to where the whole walk will reach, instead of growing with it."
 ];
 
 const CHARTS = [

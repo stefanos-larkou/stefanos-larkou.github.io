@@ -29,7 +29,7 @@ describe("useFavicon", () => {
         expect(icons()).toHaveLength(1);
     });
 
-    it("puts a new element in rather than pointing the old one somewhere else", () => {
+    it("puts a new element in and never points the old one somewhere else", () => {
         const { rerender } = render(<Marked href="/find-my-way.svg" />);
         const before = icons()[0];
         rerender(<Marked href="/random-walks.svg" />);

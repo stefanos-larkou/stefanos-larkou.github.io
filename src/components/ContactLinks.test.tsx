@@ -11,7 +11,7 @@ describe("ContactLinks", () => {
         expect(screen.getByRole("link", { name: /Email/ })).toHaveAttribute("href", "mailto:s.larkou@outlook.com");
     });
 
-    it("names the account rather than only the service", () => {
+    it("names the account and not only the service", () => {
         renderWithProviders(<ContactLinks />);
         expect(screen.getByText("s.larkou@outlook.com")).toBeInTheDocument();
     });

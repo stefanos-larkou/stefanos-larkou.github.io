@@ -51,7 +51,7 @@ describe("planShow", () => {
         expect(walks.filter(walk => walk.dimensions !== 2)).toEqual([]);
     });
 
-    it("varies what it asks for rather than repeating one show", () => {
+    it("varies what it asks for instead of repeating one show", () => {
         expect(new Set(shows.map(show => show.seed)).size).toBeGreaterThan(SAMPLE / 2);
     });
 });
