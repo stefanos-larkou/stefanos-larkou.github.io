@@ -1,0 +1,28 @@
+{
+    "name": "Stefanos Larkou",
+    "short_name": "Larkou",
+    "description": "Software engineer. I build web applications end to end, from the interface down to the database. Here are a few interactive projects that are easier to follow by watching them run.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#6a54b0",
+    "theme_color": "#6a54b0",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
