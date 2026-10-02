@@ -2,35 +2,35 @@
     "Find-My-Way": [
         {
             "name": "TypeScript",
-            "share": 98.4
+            "share": 97.6
         },
         {
             "name": "Other",
-            "share": 1.6
+            "share": 2.4
         }
     ],
     "RWalk": [
         {
             "name": "TypeScript",
-            "share": 98.8
+            "share": 98.1
         },
         {
             "name": "Other",
-            "share": 1.2
+            "share": 1.9
         }
     ],
     "forecast": [
         {
             "name": "TypeScript",
-            "share": 69.3
+            "share": 69
         },
         {
             "name": "Python",
-            "share": 30.1
+            "share": 30
         },
         {
             "name": "Other",
-            "share": 0.6
+            "share": 1
         }
     ],
     "dinopedia": [
